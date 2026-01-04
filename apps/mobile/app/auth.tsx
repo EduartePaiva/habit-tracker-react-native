@@ -1,15 +1,20 @@
+import { useAuth } from "@/lib/auth-context";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { KeyboardAvoidingView, Platform, StyleSheet, View } from "react-native";
 import { Button, Text, TextInput, useTheme } from "react-native-paper";
 
 export default function AuthScreen() {
+  const { signIn, signUp } = useAuth();
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<null | string>(null);
-  const theme = useTheme();
 
-  const handleAuth = () => {
+  const theme = useTheme();
+  const router = useRouter();
+
+  const handleAuth = async () => {
     if (!email || !password) {
       setError("Please fill in all fields.");
       return;
@@ -21,6 +26,19 @@ export default function AuthScreen() {
     }
 
     setError(null);
+
+    let error;
+    if (isSignUp) {
+      error = await signUp(email, password);
+    } else {
+      error = await signIn(email, password);
+    }
+    if (error) {
+      setError(error);
+      return;
+    }
+
+    router.replace("/");
   };
 
   return (
