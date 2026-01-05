@@ -1,19 +1,26 @@
-import { AuthProvider } from "@/lib/auth-context";
+import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
+import { tokenCache } from "@clerk/clerk-expo/token-cache";
 import { Stack } from "expo-router";
 
 export default function RootLayout() {
-  const isAuth = true;
+  return (
+    <ClerkProvider tokenCache={tokenCache}>
+      <AuthStackGuard />
+    </ClerkProvider>
+  );
+}
+
+function AuthStackGuard() {
+  const { isSignedIn } = useAuth();
 
   return (
-    <AuthProvider>
-      <Stack>
-        <Stack.Protected guard={!isAuth}>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        </Stack.Protected>
-        <Stack.Protected guard={isAuth}>
-          <Stack.Screen name="auth" options={{ headerShown: true }} />
-        </Stack.Protected>
-      </Stack>
-    </AuthProvider>
+    <Stack>
+      <Stack.Protected guard={!!isSignedIn}>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      </Stack.Protected>
+      <Stack.Protected guard={!isSignedIn}>
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      </Stack.Protected>
+    </Stack>
   );
 }

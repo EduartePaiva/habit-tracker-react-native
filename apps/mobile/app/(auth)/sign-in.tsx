@@ -1,20 +1,21 @@
-import { useAuth } from "@/lib/auth-context";
+import { useSignUp } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { KeyboardAvoidingView, Platform, StyleSheet, View } from "react-native";
 import { Button, Text, TextInput, useTheme } from "react-native-paper";
 
-export default function AuthScreen() {
-  const { signIn, signUp } = useAuth();
-  const [isSignUp, setIsSignUp] = useState(false);
+export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<null | string>(null);
+  const { signUp, isLoaded } = useSignUp();
 
   const theme = useTheme();
   const router = useRouter();
 
   const handleAuth = async () => {
+    if (!isLoaded) return;
+
     if (!email || !password) {
       setError("Please fill in all fields.");
       return;
@@ -28,11 +29,7 @@ export default function AuthScreen() {
     setError(null);
 
     let error;
-    if (isSignUp) {
-      error = await signUp(email, password);
-    } else {
-      error = await signIn(email, password);
-    }
+
     if (error) {
       setError(error);
       return;
@@ -48,7 +45,7 @@ export default function AuthScreen() {
     >
       <View style={styles.content}>
         <Text style={styles.title} variant="headlineMedium">
-          {isSignUp ? "Create Account" : "Welcome Back"}
+          Welcome Back
         </Text>
 
         <TextInput
@@ -72,14 +69,14 @@ export default function AuthScreen() {
 
         {error && <Text style={{ color: theme.colors.error }}>{error}</Text>}
         <Button mode="contained" style={styles.button} onPress={handleAuth}>
-          {isSignUp ? "Sign Up" : "Sign In"}
+          Sign In
         </Button>
         <Button
           mode="text"
           style={styles.switchModeButton}
-          onPress={() => setIsSignUp((prev) => !prev)}
+          onPress={() => router.navigate("/sign-up")}
         >
-          {isSignUp ? "Already have an account? Sign In" : "Don't have an account? Sign Up"}
+          Don&apos;t have an account? Sign Up
         </Button>
       </View>
     </KeyboardAvoidingView>
