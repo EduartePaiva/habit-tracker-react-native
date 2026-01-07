@@ -1,4 +1,4 @@
-import { useSignUp } from "@clerk/clerk-expo";
+import { useSignIn } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { KeyboardAvoidingView, Platform, StyleSheet, View } from "react-native";
@@ -8,12 +8,12 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<null | string>(null);
-  const { signUp, isLoaded } = useSignUp();
+  const { signIn, setActive, isLoaded } = useSignIn();
 
   const theme = useTheme();
   const router = useRouter();
 
-  const handleAuth = async () => {
+  const handleSignIn = async () => {
     if (!isLoaded) return;
 
     if (!email || !password) {
@@ -29,6 +29,27 @@ export default function SignIn() {
     setError(null);
 
     let error;
+    try {
+      const signInAttempt = await signIn.create({ identifier: email, password });
+
+      if (signInAttempt.status === "complete") {
+        await setActive({ session: signInAttempt.createdSessionId });
+        router.replace("/");
+      } else {
+        // If the status isn't complete, check why. User might need to
+        // complete further steps.
+        const res = await signInAttempt.prepareSecondFactor({ strategy: "email_code" });
+        // handle second factor with an email link
+        console.error(JSON.stringify(signInAttempt, null, 2));
+        setError("Error while signing in");
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Error while signing in");
+      }
+    }
 
     if (error) {
       setError(error);
@@ -68,7 +89,7 @@ export default function SignIn() {
         />
 
         {error && <Text style={{ color: theme.colors.error }}>{error}</Text>}
-        <Button mode="contained" style={styles.button} onPress={handleAuth}>
+        <Button mode="contained" style={styles.button} onPress={handleSignIn}>
           Sign In
         </Button>
         <Button
