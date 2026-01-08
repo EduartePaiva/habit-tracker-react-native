@@ -1,9 +1,9 @@
+import ConfirmationCodeField from "@/components/confirmation-code-field";
 import { useSignUp } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { KeyboardAvoidingView, Platform, StyleSheet, View } from "react-native";
-import { CodeField, Cursor, useClearByFocusCell } from "react-native-confirmation-code-field";
-import { Button, Divider, MD3Colors, Text, TextInput, useTheme } from "react-native-paper";
+import { Button, Divider, Text, TextInput, useTheme } from "react-native-paper";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
@@ -13,11 +13,6 @@ export default function SignUp() {
   const [error, setError] = useState<null | string>(null);
   const { signUp, isLoaded, setActive } = useSignUp();
   const [isSignUpLoading, setIsSignUpLoading] = useState(false);
-
-  const [codeFieldProps, getCellOnLayout] = useClearByFocusCell({
-    value: code,
-    setValue: setCode,
-  });
 
   const theme = useTheme();
   const router = useRouter();
@@ -70,6 +65,7 @@ export default function SignUp() {
   const onVerifyPress = async () => {
     if (!isLoaded) return;
 
+    setIsSignUpLoading(true);
     try {
       // Use the code the user provided to attempt verification
       const signUpAttempt = await signUp.attemptEmailAddressVerification({
@@ -87,9 +83,12 @@ export default function SignUp() {
         console.error(JSON.stringify(signUpAttempt, null, 2));
       }
     } catch (err) {
+      if (err instanceof Error) setError(err.message);
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
       console.error(JSON.stringify(err, null, 2));
+    } finally {
+      setIsSignUpLoading(false);
     }
   };
 
@@ -113,29 +112,16 @@ export default function SignUp() {
 
           <Text style={{ textAlign: "center", marginTop: 20 }}>Enter the code below:</Text>
 
-          <CodeField
-            {...codeFieldProps}
-            value={code}
-            onChangeText={setCode}
-            cellCount={6}
-            rootStyle={styles.codeFieldRoot}
-            keyboardType="number-pad"
-            textContentType="oneTimeCode"
-            renderCell={({ index, symbol, isFocused }) => (
-              <View key={index}>
-                <Text
-                  onLayout={getCellOnLayout(index)}
-                  style={[styles.cell, isFocused && styles.focusCell]}
-                >
-                  {symbol || (isFocused && <Cursor />)}
-                </Text>
-              </View>
-            )}
-          />
+          <ConfirmationCodeField code={code} setCode={setCode} />
 
           {error && <Text style={{ color: theme.colors.error }}>{error}</Text>}
-          <Button mode="contained" style={styles.button} onPress={onVerifyPress}>
-            Verify
+          <Button
+            mode="contained"
+            style={styles.button}
+            onPress={onVerifyPress}
+            disabled={isSignUpLoading}
+          >
+            {isSignUpLoading ? "Verifying..." : "Verify"}
           </Button>
           <Button
             mode="text"
@@ -223,18 +209,4 @@ const styles = StyleSheet.create({
   },
   switchModeButton: { marginTop: 16 },
   root: { flex: 1, padding: 20 },
-  codeFieldRoot: { marginTop: 20, marginBottom: 20 },
-  cell: {
-    width: 40,
-    height: 50,
-    lineHeight: 50,
-    fontSize: 24,
-    borderWidth: 1,
-    borderColor: MD3Colors.primary50,
-    textAlign: "center",
-    color: MD3Colors.primary50, // text color
-  },
-  focusCell: {
-    borderColor: MD3Colors.primary20,
-  },
 });
