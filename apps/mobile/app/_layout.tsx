@@ -1,3 +1,4 @@
+import { ActivityIndicator } from "@/components/activity-indicator";
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
 import { Stack } from "expo-router";
@@ -11,7 +12,11 @@ export default function RootLayout() {
 }
 
 function AuthStackGuard() {
-  const { isSignedIn } = useAuth();
+  const { isSignedIn, isLoaded } = useAuth();
+
+  if (!isLoaded) {
+    return <ActivityIndicator />;
+  }
 
   return (
     <Stack>
