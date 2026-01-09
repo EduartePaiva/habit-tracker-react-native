@@ -123,13 +123,6 @@ export default function SignUp() {
           >
             {isSignUpLoading ? "Verifying..." : "Verify"}
           </Button>
-          <Button
-            mode="text"
-            style={styles.switchModeButton}
-            onPress={() => router.navigate("/sign-in")}
-          >
-            Already have an account? Sign In
-          </Button>
         </View>
       </KeyboardAvoidingView>
     );
