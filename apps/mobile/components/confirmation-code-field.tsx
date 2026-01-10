@@ -1,5 +1,9 @@
 import { View } from "react-native";
-import { CodeField, Cursor, useClearByFocusCell } from "react-native-confirmation-code-field";
+import {
+  CodeField,
+  Cursor,
+  useClearByFocusCell,
+} from "react-native-confirmation-code-field";
 import { Text, useTheme } from "react-native-paper";
 
 type ConfirmationCodeFieldProps = {
@@ -7,7 +11,10 @@ type ConfirmationCodeFieldProps = {
   setCode: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function ConfirmationCodeField({ code, setCode }: ConfirmationCodeFieldProps) {
+export default function ConfirmationCodeField({
+  code,
+  setCode,
+}: ConfirmationCodeFieldProps) {
   const [codeFieldProps, getCellOnLayout] = useClearByFocusCell({
     value: code,
     setValue: setCode,
@@ -37,7 +44,9 @@ export default function ConfirmationCodeField({ code, setCode }: ConfirmationCod
                 borderWidth: 1,
                 borderColor: theme.colors.primary,
                 textAlign: "center",
-                color: isFocused ? theme.colors.secondary : theme.colors.primary, // text color
+                color: isFocused
+                  ? theme.colors.secondary
+                  : theme.colors.primary, // text color
               },
               isFocused && {
                 borderColor: theme.colors.secondary,

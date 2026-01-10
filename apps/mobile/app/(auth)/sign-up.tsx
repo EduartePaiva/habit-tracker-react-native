@@ -1,9 +1,9 @@
-import ConfirmationCodeField from "@/components/confirmation-code-field";
 import { useSignUp } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { KeyboardAvoidingView, Platform, StyleSheet, View } from "react-native";
 import { Button, Divider, Text, TextInput, useTheme } from "react-native-paper";
+import ConfirmationCodeField from "@/components/confirmation-code-field";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
@@ -32,7 +32,7 @@ export default function SignUp() {
 
     setError(null);
 
-    let error;
+    let error = null;
 
     // error = await signUp(email, password);
     setIsSignUpLoading(true);
@@ -103,14 +103,22 @@ export default function SignUp() {
             Verify Your Email
           </Text>
           <Divider style={{ marginBottom: 22 }} />
-          <Text style={{ textAlign: "center" }}>Enter the 6-digit code sent to:</Text>
+          <Text style={{ textAlign: "center" }}>
+            Enter the 6-digit code sent to:
+          </Text>
           <Text
-            style={{ textAlign: "center", fontWeight: "bold", textDecorationLine: "underline" }}
+            style={{
+              textAlign: "center",
+              fontWeight: "bold",
+              textDecorationLine: "underline",
+            }}
           >
             {email}
           </Text>
 
-          <Text style={{ textAlign: "center", marginTop: 20 }}>Enter the code below:</Text>
+          <Text style={{ textAlign: "center", marginTop: 20 }}>
+            Enter the code below:
+          </Text>
 
           <ConfirmationCodeField code={code} setCode={setCode} />
 
