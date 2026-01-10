@@ -21,9 +21,9 @@
 	},
 	"prettier.enable": false,
 	"eslint.enable": false,
-
+	"editor.indentSize": "tabSize",
 	"editor.tabSize": 2,
-	"editor.insertSpaces": true,
+	"editor.insertSpaces": false,
 	"editor.detectIndentation": false,
 	"files.trimTrailingWhitespace": false
 }

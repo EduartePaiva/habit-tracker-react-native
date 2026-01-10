@@ -6,32 +6,32 @@ import { PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function RootLayout() {
-  return (
-    <ClerkProvider tokenCache={tokenCache}>
-      <PaperProvider>
-        <SafeAreaProvider>
-          <AuthStackGuard />
-        </SafeAreaProvider>
-      </PaperProvider>
-    </ClerkProvider>
-  );
+	return (
+		<ClerkProvider tokenCache={tokenCache}>
+			<PaperProvider>
+				<SafeAreaProvider>
+					<AuthStackGuard />
+				</SafeAreaProvider>
+			</PaperProvider>
+		</ClerkProvider>
+	);
 }
 
 function AuthStackGuard() {
-  const { isSignedIn, isLoaded } = useAuth();
+	const { isSignedIn, isLoaded } = useAuth();
 
-  if (!isLoaded) {
-    return <ActivityIndicator />;
-  }
+	if (!isLoaded) {
+		return <ActivityIndicator />;
+	}
 
-  return (
-    <Stack>
-      <Stack.Protected guard={!!isSignedIn}>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack.Protected>
-      <Stack.Protected guard={!isSignedIn}>
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-      </Stack.Protected>
-    </Stack>
-  );
+	return (
+		<Stack>
+			<Stack.Protected guard={!!isSignedIn}>
+				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+			</Stack.Protected>
+			<Stack.Protected guard={!isSignedIn}>
+				<Stack.Screen name="(auth)" options={{ headerShown: false }} />
+			</Stack.Protected>
+		</Stack>
+	);
 }
