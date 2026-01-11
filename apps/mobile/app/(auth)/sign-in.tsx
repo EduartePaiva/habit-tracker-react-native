@@ -89,18 +89,13 @@ export default function SignIn() {
 
 	if (pendingSecondFactor) {
 		return (
-			<KeyboardAvoidingView
-				style={styles.container}
-				behavior={Platform.OS === "ios" ? "padding" : "height"}
-			>
+			<KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
 				<View style={styles.content}>
 					<Text style={styles.title} variant="headlineMedium">
 						Verify Your Email
 					</Text>
 					<Divider style={{ marginBottom: 22 }} />
-					<Text style={{ textAlign: "center" }}>
-						Enter the 6-digit code sent to:
-					</Text>
+					<Text style={{ textAlign: "center" }}>Enter the 6-digit code sent to:</Text>
 					<Text
 						style={{
 							textAlign: "center",
@@ -111,22 +106,12 @@ export default function SignIn() {
 						{email}
 					</Text>
 
-					<Text style={{ textAlign: "center", marginTop: 20 }}>
-						Enter the code below:
-					</Text>
+					<Text style={{ textAlign: "center", marginTop: 20 }}>Enter the code below:</Text>
 
-					<ConfirmationCodeField
-						code={secondFactorCode}
-						setCode={setSecondFactorCode}
-					/>
+					<ConfirmationCodeField code={secondFactorCode} setCode={setSecondFactorCode} />
 
 					{error && <Text style={{ color: theme.colors.error }}>{error}</Text>}
-					<Button
-						mode="contained"
-						style={styles.button}
-						onPress={handleSecondFactorVerify}
-						disabled={isSignInLoading}
-					>
+					<Button mode="contained" style={styles.button} onPress={handleSecondFactorVerify} disabled={isSignInLoading}>
 						{isSignInLoading ? "Verifying..." : "Verify"}
 					</Button>
 				</View>
@@ -135,10 +120,7 @@ export default function SignIn() {
 	}
 
 	return (
-		<KeyboardAvoidingView
-			style={styles.container}
-			behavior={Platform.OS === "ios" ? "padding" : "height"}
-		>
+		<KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
 			<View style={styles.content}>
 				<Text style={styles.title} variant="headlineMedium">
 					Welcome Back
@@ -164,19 +146,10 @@ export default function SignIn() {
 				/>
 
 				{error && <Text style={{ color: theme.colors.error }}>{error}</Text>}
-				<Button
-					mode="contained"
-					style={styles.button}
-					onPress={handleSignIn}
-					disabled={isSignInLoading}
-				>
+				<Button mode="contained" style={styles.button} onPress={handleSignIn} disabled={isSignInLoading}>
 					{isSignInLoading ? "Signing in..." : "Sign In"}
 				</Button>
-				<Button
-					mode="text"
-					style={styles.switchModeButton}
-					onPress={() => router.navigate("/sign-up")}
-				>
+				<Button mode="text" style={styles.switchModeButton} onPress={() => router.navigate("/sign-up")}>
 					Don&apos;t have an account? Sign Up
 				</Button>
 			</View>

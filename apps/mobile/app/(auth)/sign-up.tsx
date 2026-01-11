@@ -94,18 +94,13 @@ export default function SignUp() {
 
 	if (pendingVerification) {
 		return (
-			<KeyboardAvoidingView
-				style={styles.container}
-				behavior={Platform.OS === "ios" ? "padding" : "height"}
-			>
+			<KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
 				<View style={styles.content}>
 					<Text style={styles.title} variant="headlineMedium">
 						Verify Your Email
 					</Text>
 					<Divider style={{ marginBottom: 22 }} />
-					<Text style={{ textAlign: "center" }}>
-						Enter the 6-digit code sent to:
-					</Text>
+					<Text style={{ textAlign: "center" }}>Enter the 6-digit code sent to:</Text>
 					<Text
 						style={{
 							textAlign: "center",
@@ -116,19 +111,12 @@ export default function SignUp() {
 						{email}
 					</Text>
 
-					<Text style={{ textAlign: "center", marginTop: 20 }}>
-						Enter the code below:
-					</Text>
+					<Text style={{ textAlign: "center", marginTop: 20 }}>Enter the code below:</Text>
 
 					<ConfirmationCodeField code={code} setCode={setCode} />
 
 					{error && <Text style={{ color: theme.colors.error }}>{error}</Text>}
-					<Button
-						mode="contained"
-						style={styles.button}
-						onPress={onVerifyPress}
-						disabled={isSignUpLoading}
-					>
+					<Button mode="contained" style={styles.button} onPress={onVerifyPress} disabled={isSignUpLoading}>
 						{isSignUpLoading ? "Verifying..." : "Verify"}
 					</Button>
 				</View>
@@ -137,10 +125,7 @@ export default function SignUp() {
 	}
 
 	return (
-		<KeyboardAvoidingView
-			style={styles.container}
-			behavior={Platform.OS === "ios" ? "padding" : "height"}
-		>
+		<KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
 			<View style={styles.content}>
 				<Text style={styles.title} variant="headlineMedium">
 					Create Account
@@ -166,12 +151,7 @@ export default function SignUp() {
 				/>
 
 				{error && <Text style={{ color: theme.colors.error }}>{error}</Text>}
-				<Button
-					mode="contained"
-					style={styles.button}
-					onPress={onSignUpPress}
-					disabled={isSignUpLoading}
-				>
+				<Button mode="contained" style={styles.button} onPress={onSignUpPress} disabled={isSignUpLoading}>
 					{isSignUpLoading ? "Signing up..." : "Sign Up"}
 				</Button>
 				<Button
