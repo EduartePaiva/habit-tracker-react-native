@@ -21,6 +21,8 @@
 	},
 	"prettier.enable": false,
 	"eslint.enable": false,
+	"biome.enabled": true,
+	"biome.lsp.trace.server": "verbose",
 	"editor.indentSize": "tabSize",
 	"editor.tabSize": 2,
 	"editor.insertSpaces": false,
