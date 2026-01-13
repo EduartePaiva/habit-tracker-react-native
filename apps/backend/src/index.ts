@@ -1,10 +1,14 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import env from "@/lib/env";
+import { clerkMiddleware } from "./lib/clerk/authMiddleware";
 
-const app = new Hono();
+const app = new Hono().use(clerkMiddleware);
 
-app.get("/", (c) => {
+app.get("/", clerkMiddleware, (c) => {
+	const user = c.get("clerkAuth");
+
+	console.log(user.userId);
 	return c.text("Hello Hono!");
 });
 

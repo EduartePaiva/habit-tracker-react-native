@@ -9,6 +9,11 @@ const EnvSchema = z.object({
 	NODE_ENV: z.enum(["development", "production", "test"]),
 	PORT: z.coerce.number().default(9999),
 	DATABASE_URL: z.url(),
+	CLERK_SECRET_KEY: z.string(),
+	CLERK_API_VERSION: z.string().optional(),
+	CLERK_API_URL: z.string().optional(),
+	CLERK_JWT_KEY: z.string(),
+	CLERK_PUBLISHABLE_KEY: z.string(),
 });
 
 const parsedData = EnvSchema.safeParse(process.env);
