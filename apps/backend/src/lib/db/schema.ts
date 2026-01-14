@@ -1,4 +1,6 @@
-import { date, integer, pgTable, text, uuid, varchar } from "drizzle-orm/pg-core";
+import { date, integer, pgEnum, pgTable, text, uuid, varchar } from "drizzle-orm/pg-core";
+
+export const frequencyEnum = pgEnum("frequency", ["daily", "weekly", "monthly"]);
 
 export const habitsTable = pgTable("habits", {
 	id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -6,7 +8,7 @@ export const habitsTable = pgTable("habits", {
 	title: varchar({ length: 255 }).notNull(),
 	description: text().notNull(),
 	streakCount: integer().default(0),
-	frequency: text(),
+	frequency: frequencyEnum().default("daily"),
 	lastCompleted: date(),
 	createdAt: date().defaultNow(),
 });
