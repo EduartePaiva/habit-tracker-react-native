@@ -6,7 +6,7 @@ const FREQUENCIES = [
 	{ value: "daily", label: "Daily" },
 	{ value: "weekly", label: "Weekly" },
 	{ value: "monthly", label: "Monthly" },
-] as const;
+] as const satisfies Record<string, string>[];
 
 type Frequency = (typeof FREQUENCIES)[number]["value"];
 
@@ -32,11 +32,7 @@ export default function AddHabitScreen() {
 				value={description}
 			/>
 			<View style={styles.frequencyContainer}>
-				<SegmentedButtons<(typeof FREQUENCIES)[number]["value"]>
-					buttons={FREQUENCIES}
-					onValueChange={setFrequency}
-					value={frequency}
-				/>
+				<SegmentedButtons buttons={FREQUENCIES} onValueChange={setFrequency} value={frequency} />
 			</View>
 			<Button mode="contained">Add Habit</Button>
 		</View>
