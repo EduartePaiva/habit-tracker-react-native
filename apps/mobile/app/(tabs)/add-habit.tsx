@@ -1,3 +1,4 @@
+import { useAuth } from "@clerk/clerk-expo";
 import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button, SegmentedButtons, TextInput } from "react-native-paper";
@@ -14,6 +15,13 @@ export default function AddHabitScreen() {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const [frequency, setFrequency] = useState<Frequency>("daily");
+	const { userId, isSignedIn } = useAuth();
+
+	const handleSubmit = async () => {
+		if (!isSignedIn) return;
+
+		// handle adding a habit
+	};
 
 	return (
 		<View style={styles.container}>
@@ -34,7 +42,9 @@ export default function AddHabitScreen() {
 			<View style={styles.frequencyContainer}>
 				<SegmentedButtons buttons={FREQUENCIES} onValueChange={setFrequency} value={frequency} />
 			</View>
-			<Button mode="contained">Add Habit</Button>
+			<Button mode="contained" disabled={!title || !description} onPress={handleSubmit}>
+				Add Habit
+			</Button>
 		</View>
 	);
 }
