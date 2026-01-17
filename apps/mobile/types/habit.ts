@@ -6,4 +6,8 @@ export interface Habit {
 
 export interface CreateHabitInput {}
 export interface UpdateHabitInput {}
-export interface HabitResponse {}
+export interface HabitPostResponse {}
+export interface PaginatedHabitsGetResponse {
+	data: Habit[];
+	page: number;
+}
