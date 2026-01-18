@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import habitApi from "@/api/habits";
 import { CreateHabitInput } from "@/types/habit";
 
-export function useUsers() {
+export function useHabit() {
 	const { getToken, isLoaded, isSignedIn } = useAuth();
 	const queryClient = useQueryClient();
 

@@ -1,7 +1,9 @@
 import { useAuth } from "@clerk/clerk-expo";
+import { useRouter } from "expo-router";
 import { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Button, SegmentedButtons, TextInput } from "react-native-paper";
+import { StyleSheet, View } from "react-native";
+import { Button, SegmentedButtons, Text, TextInput, useTheme } from "react-native-paper";
+import { useHabit } from "@/hooks/use-habits";
 
 const FREQUENCIES = [
 	{ value: "daily", label: "Daily" },
@@ -15,12 +17,17 @@ export default function AddHabitScreen() {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const [frequency, setFrequency] = useState<Frequency>("daily");
-	const { userId, isSignedIn } = useAuth();
+	const { isSignedIn } = useAuth();
+	const { addHabit } = useHabit();
+	const theme = useTheme();
+	const router = useRouter();
 
-	const handleSubmit = async () => {
+	const handleSubmit = () => {
 		if (!isSignedIn) return;
 
 		// handle adding a habit
+		addHabit.reset();
+		addHabit.mutate({ title, description, frequency }, { onSuccess: router.back });
 	};
 
 	return (
@@ -45,6 +52,10 @@ export default function AddHabitScreen() {
 			<Button mode="contained" disabled={!title || !description} onPress={handleSubmit}>
 				Add Habit
 			</Button>
+
+			{addHabit.status === "error" && (
+				<Text style={{ color: theme.colors.error }}>{addHabit.error.message}</Text>
+			)}
 		</View>
 	);
 }
