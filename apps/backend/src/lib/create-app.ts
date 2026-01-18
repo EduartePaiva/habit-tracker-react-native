@@ -2,8 +2,12 @@ import { Hono } from "hono";
 import { clerkMiddleware } from "./clerk/authMiddleware";
 import type { AppBindings } from "./types";
 
-export default function createApp() {
-	const app = new Hono<AppBindings>().basePath("/api").use(clerkMiddleware);
+export function CreateRouter() {
+	return new Hono<AppBindings>();
+}
 
-	return app;
+export default function createApp() {
+	const app = CreateRouter();
+
+	return app.basePath("/api").use(clerkMiddleware);
 }
