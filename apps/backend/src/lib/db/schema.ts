@@ -1,4 +1,5 @@
-import { date, integer, pgEnum, pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { integer, pgEnum, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
 
 export const frequencyEnum = pgEnum("frequency", ["daily", "weekly", "monthly"]);
 
@@ -9,6 +10,11 @@ export const habitsTable = pgTable("habits", {
 	description: text().notNull(),
 	streakCount: integer().default(0),
 	frequency: frequencyEnum().default("daily"),
-	lastCompleted: date().defaultNow(),
-	createdAt: date().defaultNow(),
+	lastCompleted: timestamp().defaultNow(),
+	createdAt: timestamp().defaultNow(),
+});
+
+export const habitsInsertSchema = createInsertSchema(habitsTable).omit({
+	userId: true,
+	createdAt: true,
 });

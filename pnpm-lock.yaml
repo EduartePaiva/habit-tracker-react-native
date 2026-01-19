@@ -23,9 +23,15 @@ importers:
       '@hono/node-server':
         specifier: ^1.19.6
         version: 1.19.7(hono@4.11.3)
+      '@hono/zod-validator':
+        specifier: 0.7.6
+        version: 0.7.6(hono@4.11.3)(zod@4.3.5)
       drizzle-orm:
         specifier: 0.45.1
         version: 0.45.1(@types/pg@8.16.0)(pg@8.16.3)
+      drizzle-zod:
+        specifier: 0.8.3
+        version: 0.8.3(drizzle-orm@0.45.1(@types/pg@8.16.0)(pg@8.16.3))(zod@4.3.5)
       hono:
         specifier: ^4.11.3
         version: 4.11.3
@@ -1531,6 +1537,12 @@ packages:
     engines: {node: '>=18.14.1'}
     peerDependencies:
       hono: ^4
+
+  '@hono/zod-validator@0.7.6':
+    resolution: {integrity: sha512-Io1B6d011Gj1KknV4rXYz4le5+5EubcWEU/speUjuw9XMMIaP3n78yXLhjd2A3PXaXaUwEAluOiAyLqhBEJgsw==}
+    peerDependencies:
+      hono: '>=3.9.0'
+      zod: ^3.25.0 || ^4.0.0
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -3139,6 +3151,12 @@ packages:
         optional: true
       sqlite3:
         optional: true
+
+  drizzle-zod@0.8.3:
+    resolution: {integrity: sha512-66yVOuvGhKJnTdiqj1/Xaaz9/qzOdRJADpDa68enqS6g3t0kpNkwNYjUuaeXgZfO/UWuIM9HIhSlJ6C5ZraMww==}
+    peerDependencies:
+      drizzle-orm: '>=0.36.0'
+      zod: ^3.25.0 || ^4.0.0
 
   dunder-proto@1.0.1:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
@@ -7292,6 +7310,11 @@ snapshots:
     dependencies:
       hono: 4.11.3
 
+  '@hono/zod-validator@0.7.6(hono@4.11.3)(zod@4.3.5)':
+    dependencies:
+      hono: 4.11.3
+      zod: 4.3.5
+
   '@humanfs/core@0.19.1': {}
 
   '@humanfs/node@0.16.7':
@@ -9057,6 +9080,11 @@ snapshots:
     optionalDependencies:
       '@types/pg': 8.16.0
       pg: 8.16.3
+
+  drizzle-zod@0.8.3(drizzle-orm@0.45.1(@types/pg@8.16.0)(pg@8.16.3))(zod@4.3.5):
+    dependencies:
+      drizzle-orm: 0.45.1(@types/pg@8.16.0)(pg@8.16.3)
+      zod: 4.3.5
 
   dunder-proto@1.0.1:
     dependencies:

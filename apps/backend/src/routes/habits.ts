@@ -1,20 +1,23 @@
+import { zValidator } from "@hono/zod-validator";
 import { CreateRouter } from "@/lib/create-app";
 import db from "@/lib/db";
-import { habitsTable } from "@/lib/db/schema";
+import { habitsInsertSchema, habitsTable } from "@/lib/db/schema";
 
-const habitRouter = CreateRouter();
+const habitRouter = CreateRouter().basePath("/habit");
 
-habitRouter.post(async (c) => {
+habitRouter.post(zValidator("json", habitsInsertSchema), async (c) => {
 	const { userId } = c.get("clerkAuth");
+	const { title, description, frequency, lastCompleted, streakCount } = c.req.valid("json");
 
-	// TODO: parse the data from user
 	const res = await db
 		.insert(habitsTable)
 		.values({
-			title: "",
-			description: "",
+			title,
+			description,
 			userId,
-			frequency: "daily",
+			frequency,
+			lastCompleted,
+			streakCount,
 		})
 		.returning();
 
