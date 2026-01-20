@@ -1,8 +1,6 @@
 import { serve } from "@hono/node-server";
+import app from "@/app";
 import env from "@/lib/env";
-import createApp from "./lib/create-app";
-
-const app = createApp();
 
 app.get("/", (c) => {
 	return c.text("Hello Hono!");
