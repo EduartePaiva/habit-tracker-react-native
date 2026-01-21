@@ -1,7 +1,14 @@
 type Frequency = "weekly" | "daily" | "monthly";
 
 export interface Habit {
+	id: number;
+	userId: string;
+	title: string;
+	description: string;
 	frequency: Frequency;
+	streakCount: number;
+	lastCompleted: string;
+	createdAt: string;
 }
 
 export interface CreateHabitInput {

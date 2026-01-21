@@ -1,17 +1,43 @@
 import { useAuth } from "@clerk/clerk-expo";
-import { Ionicons } from "@expo/vector-icons";
-import { StyleSheet, Text, View } from "react-native";
-import { Button } from "react-native-paper";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { StyleSheet, View } from "react-native";
+import { Button, Text } from "react-native-paper";
+import { useHabit } from "@/hooks/use-habits";
 
 export default function Index() {
 	const { signOut } = useAuth();
+	const { habits } = useHabit();
+
 	return (
 		<View style={styles.view}>
-			<Text>Home Page</Text>
-			<Button icon={"logout"} onPress={() => signOut()}>
-				Sign Out
-			</Button>
-			<Ionicons size={40} />
+			<View>
+				<Text variant="headlineSmall">Today's Habits</Text>
+				<Button icon={"logout"} onPress={() => signOut()}>
+					Sign Out
+				</Button>
+			</View>
+
+			{habits ? (
+				habits.map((habit) => (
+					<View key={habit.id}>
+						<Text>{habit.title}</Text>
+						<Text>{habit.description}</Text>
+						<View>
+							<View>
+								<MaterialCommunityIcons name="fire" size={18} color="#ff9800" />
+								<Text>{habit.streakCount} day streak</Text>
+							</View>
+							<View>
+								<Text style={{ textTransform: "capitalize" }}>{habit.frequency}</Text>
+							</View>
+						</View>
+					</View>
+				))
+			) : (
+				<View>
+					<Text>No Habits yet. Add your first Habit!</Text>
+				</View>
+			)}
 		</View>
 	);
 }
