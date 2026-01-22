@@ -21,7 +21,7 @@ export default function Index() {
 
 			{habits ? (
 				habits.map((habit) => (
-					<Surface key={habit.id} style={styles.card} elevation={0}>
+					<Surface key={habit.id} style={styles.card} elevation={3}>
 						<View style={styles.cardContent}>
 							<Text style={styles.cardTitle}>{habit.title}</Text>
 							<Text style={styles.cardDescription}>{habit.description}</Text>
@@ -62,12 +62,37 @@ const styles = StyleSheet.create({
 	card: {
 		marginBottom: 18,
 		borderRadius: 18,
-		backgroundColor: "f7f2fa",
+		backgroundColor: "#f7f2fa",
 		shadowColor: "#000",
 		shadowOffset: { width: 0, height: 2 },
 		shadowOpacity: 0.08,
 		shadowRadius: 8,
-		elevation: 4,
 	},
-	frequencyText: { textTransform: "capitalize" },
+	cardContent: { padding: 20 },
+	cardTitle: { fontSize: 20, fontWeight: "bold", marginBottom: 4, color: "#22223b" },
+	cardDescription: { fontSize: 15, marginBottom: 16, color: "#6c6c80" },
+	cardFooter: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
+	streakBadge: {
+		flexDirection: "row",
+		alignItems: "center",
+		backgroundColor: "#fff3e0",
+		borderRadius: 12,
+		paddingHorizontal: 10,
+		paddingVertical: 4,
+	},
+	streakText: { marginLeft: 6, color: "#ff9800", fontWeight: "bold", fontSize: 14 },
+	frequencyBadge: {
+		backgroundColor: "#ede7f6",
+		borderRadius: 12,
+		paddingHorizontal: 12,
+		paddingVertical: 4,
+	},
+	frequencyText: {
+		color: "#7c4dff",
+		fontWeight: "bold",
+		fontSize: 14,
+		textTransform: "capitalize",
+	},
+	emptyState: { flex: 1, justifyContent: "center", alignItems: "center" },
+	emptyStateText: { color: "#666666" },
 });

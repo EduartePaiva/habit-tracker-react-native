@@ -7,6 +7,6 @@
 [x] - create backend with middleware that authenticate the user
 [x] - use drizzleORM as the database orm
 [x] - create database table for habits collection (user_id, title, description, streak_count, last_completed, frequency, created_at)
-[_] - build get habits route in the backend
+[x] - build get habits route in the backend
 
 following at: 2:24

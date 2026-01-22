@@ -26,6 +26,7 @@ const habitRouter = CreateRouter()
 	})
 	.get(async (c) => {
 		const { userId } = c.get("clerkAuth");
+
 		const res = await db.select().from(habitsTable).where(eq(habitsTable.userId, userId));
 
 		return c.json({ data: res });
