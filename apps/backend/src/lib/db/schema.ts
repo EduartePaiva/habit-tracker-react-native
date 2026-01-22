@@ -8,10 +8,10 @@ export const habitsTable = pgTable("habits", {
 	userId: text().notNull(),
 	title: varchar({ length: 255 }).notNull(),
 	description: text().notNull(),
-	streakCount: integer().default(0),
-	frequency: frequencyEnum().default("daily"),
-	lastCompleted: timestamp().defaultNow(),
-	createdAt: timestamp().defaultNow(),
+	streakCount: integer().notNull().default(0),
+	frequency: frequencyEnum().notNull().default("daily"),
+	lastCompleted: timestamp().notNull().defaultNow(),
+	createdAt: timestamp().notNull().defaultNow(),
 });
 
 export const habitsInsertSchema = createInsertSchema(habitsTable).omit({

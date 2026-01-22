@@ -22,5 +22,4 @@ export interface UpdateHabitInput {}
 export interface HabitPostResponse {}
 export interface PaginatedHabitsGetResponse {
 	data: Habit[];
-	page: number;
 }
