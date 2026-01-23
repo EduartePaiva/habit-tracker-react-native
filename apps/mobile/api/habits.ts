@@ -1,12 +1,18 @@
-import { CreateHabitInput, HabitPostResponse, PaginatedHabitsGetResponse } from "@/types/habit";
-import { api } from "./client";
-
-function authWithBearer(token: string) {
-	return { headers: { Authorization: `Bearer ${token}` } };
-}
+import {
+	CreateHabitInput,
+	HabitDeleteResponse,
+	HabitPostResponse,
+	PaginatedHabitsGetResponse,
+} from "@/types/habit";
+import { api, authWithBearer } from "./client";
 
 const addHabit = async (token: string, habit: CreateHabitInput) => {
 	const res = await api.post<HabitPostResponse>("/habit", habit, authWithBearer(token));
+
+	return res.data;
+};
+const deleteHabit = async (token: string, habitId: string) => {
+	const res = await api.delete<HabitDeleteResponse>(`/habit/${habitId}`, authWithBearer(token));
 
 	return res.data;
 };
@@ -17,4 +23,4 @@ const getHabits = async (token: string) => {
 	return res.data;
 };
 
-export default { addHabit, getHabits };
+export default { addHabit, getHabits, deleteHabit };

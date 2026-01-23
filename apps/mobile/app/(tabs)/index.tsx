@@ -1,6 +1,8 @@
 import { useAuth } from "@clerk/clerk-expo";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { StyleSheet, View } from "react-native";
+import { useRef } from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
+import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import { Button, Surface, Text } from "react-native-paper";
 import { useHabit } from "@/hooks/use-habits";
 
@@ -19,29 +21,33 @@ export default function Index() {
 				</Button>
 			</View>
 
-			{habits ? (
-				habits.map((habit) => (
-					<Surface key={habit.id} style={styles.card} elevation={3}>
-						<View style={styles.cardContent}>
-							<Text style={styles.cardTitle}>{habit.title}</Text>
-							<Text style={styles.cardDescription}>{habit.description}</Text>
-							<View style={styles.cardFooter}>
-								<View style={styles.streakBadge}>
-									<MaterialCommunityIcons name="fire" size={18} color="#ff9800" />
-									<Text style={styles.streakText}>{habit.streakCount} day streak</Text>
+			<ScrollView showsVerticalScrollIndicator={false}>
+				{habits ? (
+					habits.map((habit) => (
+						<Swipeable key={habit.id}>
+							<Surface style={styles.card} elevation={3}>
+								<View style={styles.cardContent}>
+									<Text style={styles.cardTitle}>{habit.title}</Text>
+									<Text style={styles.cardDescription}>{habit.description}</Text>
+									<View style={styles.cardFooter}>
+										<View style={styles.streakBadge}>
+											<MaterialCommunityIcons name="fire" size={18} color="#ff9800" />
+											<Text style={styles.streakText}>{habit.streakCount} day streak</Text>
+										</View>
+										<View style={styles.frequencyBadge}>
+											<Text style={styles.frequencyText}>{habit.frequency}</Text>
+										</View>
+									</View>
 								</View>
-								<View style={styles.frequencyBadge}>
-									<Text style={styles.frequencyText}>{habit.frequency}</Text>
-								</View>
-							</View>
-						</View>
-					</Surface>
-				))
-			) : (
-				<View style={styles.emptyState}>
-					<Text style={styles.emptyStateText}>No Habits yet. Add your first Habit!</Text>
-				</View>
-			)}
+							</Surface>
+						</Swipeable>
+					))
+				) : (
+					<View style={styles.emptyState}>
+						<Text style={styles.emptyStateText}>No Habits yet. Add your first Habit!</Text>
+					</View>
+				)}
+			</ScrollView>
 		</View>
 	);
 }

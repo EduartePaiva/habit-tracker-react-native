@@ -28,20 +28,21 @@ export function useHabit() {
 		},
 	});
 
-	// const deleteHabit = useMutation({
-	// 	mutationFn: async (id: string) => {
-	// 		const token = await getToken();
-	// 		if (!token) throw new Error("No auth token");
-	// 		return usersApi.deleteUser(token, id);
-	// 	},
-	// 	onSuccess: () => {
-	// 		queryClient.invalidateQueries({ queryKey: ["habits"] });
-	// 	},
-	// });
+	const deleteHabit = useMutation({
+		mutationFn: async (habitId: string) => {
+			const token = await getToken();
+			if (!token) throw new Error("No auth token");
+			return habitApi.deleteHabit(token, habitId);
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["habits"] });
+		},
+	});
 
 	return {
 		habits: habitsQuery.data,
 		isLoading: habitsQuery.isLoading,
-		addHabit: addHabit,
+		addHabit,
+		deleteHabit,
 	};
 }

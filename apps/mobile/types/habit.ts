@@ -20,6 +20,8 @@ export interface CreateHabitInput {
 }
 export interface UpdateHabitInput {}
 export interface HabitPostResponse {}
+
+export interface HabitDeleteResponse {}
 export interface PaginatedHabitsGetResponse {
 	data: Habit[];
 }

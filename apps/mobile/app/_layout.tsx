@@ -2,6 +2,7 @@ import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { ActivityIndicator } from "@/components/activity-indicator";
@@ -11,15 +12,17 @@ const queryClient = new QueryClient();
 
 export default function RootLayout() {
 	return (
-		<ClerkProvider tokenCache={tokenCache}>
-			<QueryClientProvider client={queryClient}>
-				<PaperProvider theme={{ dark: false }}>
-					<SafeAreaProvider>
-						<AuthStackGuard />
-					</SafeAreaProvider>
-				</PaperProvider>
-			</QueryClientProvider>
-		</ClerkProvider>
+		<GestureHandlerRootView style={{ flex: 1 }}>
+			<ClerkProvider tokenCache={tokenCache}>
+				<QueryClientProvider client={queryClient}>
+					<PaperProvider theme={{ dark: false }}>
+						<SafeAreaProvider>
+							<AuthStackGuard />
+						</SafeAreaProvider>
+					</PaperProvider>
+				</QueryClientProvider>
+			</ClerkProvider>
+		</GestureHandlerRootView>
 	);
 }
 
