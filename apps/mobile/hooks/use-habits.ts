@@ -29,7 +29,7 @@ export function useHabit() {
 	});
 
 	const deleteHabit = useMutation({
-		mutationFn: async (habitId: string) => {
+		mutationFn: async (habitId: number) => {
 			const token = await getToken();
 			if (!token) throw new Error("No auth token");
 			return habitApi.deleteHabit(token, habitId);

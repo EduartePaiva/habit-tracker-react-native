@@ -2,13 +2,30 @@ import { useAuth } from "@clerk/clerk-expo";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRef } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
+import Swipeable, { SwipeDirection } from "react-native-gesture-handler/ReanimatedSwipeable";
 import { Button, Surface, Text } from "react-native-paper";
 import { useHabit } from "@/hooks/use-habits";
 
 export default function Index() {
 	const { signOut } = useAuth();
-	const { habits } = useHabit();
+	const { habits, deleteHabit } = useHabit();
+
+	const swipableRefs = useRef<{ [key: string]: null | typeof Swipeable }>({});
+
+	const handleDeleteHabit = (habitId: number) => {
+		deleteHabit.mutate(habitId);
+	};
+
+	const renderRightAction = () => (
+		<View style={styles.swipeActionRight}>
+			<MaterialCommunityIcons name="check-circle-outline" size={32} color="#fff" />
+		</View>
+	);
+	const renderLeftAction = () => (
+		<View style={styles.swipeActionLeft}>
+			<MaterialCommunityIcons name="trash-can-outline" size={32} color="#fff" />
+		</View>
+	);
 
 	return (
 		<View style={styles.container}>
@@ -24,8 +41,19 @@ export default function Index() {
 			<ScrollView showsVerticalScrollIndicator={false}>
 				{habits ? (
 					habits.map((habit) => (
-						<Swipeable key={habit.id}>
-							<Surface style={styles.card} elevation={3}>
+						<Swipeable
+							key={habit.id}
+							overshootLeft={false}
+							overshootRight={false}
+							renderLeftActions={renderLeftAction}
+							renderRightActions={renderRightAction}
+							onSwipeableOpen={(dir) => {
+								if (dir === "right") {
+									deleteHabit.mutate(habit.id);
+								}
+							}}
+						>
+							<Surface style={styles.card} elevation={2}>
 								<View style={styles.cardContent}>
 									<Text style={styles.cardTitle}>{habit.title}</Text>
 									<Text style={styles.cardDescription}>{habit.description}</Text>
@@ -67,6 +95,8 @@ const styles = StyleSheet.create({
 	title: { fontWeight: "bold" },
 	card: {
 		marginBottom: 18,
+		marginRight: 10,
+		marginLeft: 10,
 		borderRadius: 18,
 		backgroundColor: "#f7f2fa",
 		shadowColor: "#000",
@@ -101,4 +131,24 @@ const styles = StyleSheet.create({
 	},
 	emptyState: { flex: 1, justifyContent: "center", alignItems: "center" },
 	emptyStateText: { color: "#666666" },
+	swipeActionLeft: {
+		justifyContent: "center",
+		alignItems: "flex-start",
+		flex: 1,
+		backgroundColor: "#e53935",
+		borderRadius: 18,
+		marginBottom: 18,
+		marginTop: 2,
+		paddingLeft: 16,
+	},
+	swipeActionRight: {
+		backgroundColor: "#4caf50",
+		justifyContent: "center",
+		alignItems: "flex-end",
+		flex: 1,
+		borderRadius: 18,
+		marginBottom: 18,
+		marginTop: 2,
+		paddingRight: 16,
+	},
 });

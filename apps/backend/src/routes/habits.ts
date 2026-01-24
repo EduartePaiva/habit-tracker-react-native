@@ -1,5 +1,5 @@
 import { zValidator } from "@hono/zod-validator";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { CreateRouter } from "@/lib/create-app";
 import db from "@/lib/db";
 import { habitsInsertSchema, habitsTable } from "@/lib/db/schema";
@@ -30,6 +30,16 @@ const habitRouter = CreateRouter()
 		const res = await db.select().from(habitsTable).where(eq(habitsTable.userId, userId));
 
 		return c.json({ data: res });
+	})
+	.delete("/:habitId", async (c) => {
+		const habitId = Number(c.req.param("habitId"));
+		const { userId } = c.get("clerkAuth");
+
+		await db
+			.delete(habitsTable)
+			.where(and(eq(habitsTable.id, habitId), eq(habitsTable.userId, userId)));
+
+		return c.body(null, 204);
 	});
 
 export default habitRouter;

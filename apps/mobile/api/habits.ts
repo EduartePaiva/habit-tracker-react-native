@@ -11,7 +11,7 @@ const addHabit = async (token: string, habit: CreateHabitInput) => {
 
 	return res.data;
 };
-const deleteHabit = async (token: string, habitId: string) => {
+const deleteHabit = async (token: string, habitId: number) => {
 	const res = await api.delete<HabitDeleteResponse>(`/habit/${habitId}`, authWithBearer(token));
 
 	return res.data;
