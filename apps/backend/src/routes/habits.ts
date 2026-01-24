@@ -22,7 +22,7 @@ const habitRouter = CreateRouter()
 			})
 			.returning();
 
-		return c.json(res[0]);
+		return c.json(res[0], 201);
 	})
 	.get(async (c) => {
 		const { userId } = c.get("clerkAuth");
@@ -35,9 +35,17 @@ const habitRouter = CreateRouter()
 		const habitId = Number(c.req.param("habitId"));
 		const { userId } = c.get("clerkAuth");
 
-		await db
+		if (Number.isNaN(habitId)) {
+			return c.json({ error: "Invalid habit id" }, 400);
+		}
+
+		const deleted = await db
 			.delete(habitsTable)
-			.where(and(eq(habitsTable.id, habitId), eq(habitsTable.userId, userId)));
+			.where(and(eq(habitsTable.id, habitId), eq(habitsTable.userId, userId)))
+			.returning({ id: habitsTable.id });
+		if (deleted.length === 0) {
+			return c.json({ error: "Habit not found" }, 404);
+		}
 
 		return c.body(null, 204);
 	});
