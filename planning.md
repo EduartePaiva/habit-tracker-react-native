@@ -8,5 +8,7 @@
 [x] - use drizzleORM as the database orm
 [x] - create database table for habits collection (user_id, title, description, streak_count, last_completed, frequency, created_at)
 [x] - build get habits route in the backend
+[_] - build streak functionality.
+[_] - make confirmation for deleting a habit or a soft delete instead
 
 following at: 2:24
