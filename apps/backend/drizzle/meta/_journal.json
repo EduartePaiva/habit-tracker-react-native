@@ -29,6 +29,13 @@
       "when": 1769117049833,
       "tag": "0003_fresh_havok",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1769465536258,
+      "tag": "0004_cloudy_vargas",
+      "breakpoints": true
     }
   ]
 }

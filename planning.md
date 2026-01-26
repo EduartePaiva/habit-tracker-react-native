@@ -10,5 +10,6 @@
 [x] - build get habits route in the backend
 [_] - build streak functionality.
 [_] - make confirmation for deleting a habit or a soft delete instead
+[_] - migrate app to only local without a backend
 
 following at: 2:24
