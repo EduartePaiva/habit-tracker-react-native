@@ -40,6 +40,11 @@ export const habitCompletionTable = pgTable(
 	(t) => [primaryKey({ columns: [t.userId, t.habitId] })],
 );
 
+export const completeHabitSchema = createInsertSchema(habitCompletionTable).omit({
+	userId: true,
+	completedAt: true,
+});
+
 export const habitCompletionRelations = relations(habitCompletionTable, ({ one }) => ({
 	habit: one(habitsTable, { fields: [habitCompletionTable.habitId], references: [habitsTable.id] }),
 }));

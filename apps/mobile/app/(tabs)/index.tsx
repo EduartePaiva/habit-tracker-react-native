@@ -10,9 +10,7 @@ export default function Index() {
 	const { signOut } = useAuth();
 	const { habits, deleteHabit } = useHabit();
 
-	const swipableRefs = useRef<{ [key: string]: null | typeof Swipeable }>({});
-
-	const handleDeleteHabit = (habitId: number) => {
+	const handleCompleteHabit = (habitId: number) => {
 		deleteHabit.mutate(habitId);
 	};
 
