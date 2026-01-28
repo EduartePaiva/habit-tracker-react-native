@@ -11,7 +11,7 @@
 [_] - build streak functionality.
 [_] - make confirmation for deleting a habit or a soft delete instead
 [_] - migrate app to only local without a backend
-[_] - route complete habit, disallow completing twice a day.
+[x] - route complete habit, disallow completing twice a period.
 [_] - route completed today habits, if we have lst completed, we can just check in the frontend instead, order_by lst completed.
 [_] - streak cnt should restart if the lst completed gap is two time units wider  
 
