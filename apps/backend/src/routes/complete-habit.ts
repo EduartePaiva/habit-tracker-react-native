@@ -18,7 +18,7 @@ const completeHabitRouter = CreateRouter()
 			.from(habitsTable)
 			.where(and(eq(habitsTable.id, habitId), eq(habitsTable.userId, userId)));
 		if (habit.length !== 1) {
-			return c.json({ error: "Invalid habitId" }, 422);
+			return c.json({ error: "Invalid habitId" }, 404);
 		}
 
 		const { frequency, lastCompleted, streakCount } = habit[0];
@@ -27,19 +27,19 @@ const completeHabitRouter = CreateRouter()
 		const currentDate = getStartOfFrequency(new Date(), frequency);
 		const lastCompletedByFrequency = getStartOfFrequency(lastCompleted, frequency);
 
-		if (currentDate === lastCompletedByFrequency) {
+		if (currentDate.getTime() === lastCompletedByFrequency.getTime()) {
 			return c.json({ error: "Habit already completed for this period" }, 409);
 		}
 
 		// see if we increase streak cnt or we restart it.
-		// if curData minus 1 period is equal to lcf then we can increase it.
+		// if curData minus 1 period is equal to lastCompletedByFrequency then we can increase it.
 
 		const lastValidDate = getStartOfFrequency(
 			new Date(currentDate.getTime() - HOURS_MILLISECOND_12),
 			frequency,
 		);
 		let newStreakCnt: number;
-		if (lastValidDate === lastCompletedByFrequency) {
+		if (lastValidDate.getTime() === lastCompletedByFrequency.getTime()) {
 			// we can increase streak
 			newStreakCnt = streakCount + 1;
 		} else {
