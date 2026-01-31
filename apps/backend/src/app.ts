@@ -1,9 +1,10 @@
-import createApp from "./lib/create-app";
-import habitRouter from "./routes/habits";
+import createApp from "@/lib/create-app";
+import completeHabitRouter from "@/routes/complete-habit";
+import habitRouter from "@/routes/habits";
 
 const app = createApp();
 
-const routes = [habitRouter] as const;
+const routes = [habitRouter, completeHabitRouter] as const;
 
 routes.forEach((route) => {
 	app.route("/", route);

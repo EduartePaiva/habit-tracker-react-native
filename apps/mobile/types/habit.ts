@@ -25,3 +25,7 @@ export interface HabitDeleteResponse {}
 export interface PaginatedHabitsGetResponse {
 	data: Habit[];
 }
+
+export interface CompleteHabitInput {
+	habitId: number;
+}
