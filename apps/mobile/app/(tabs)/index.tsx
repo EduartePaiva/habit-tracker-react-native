@@ -8,11 +8,7 @@ import { useHabit } from "@/hooks/use-habits";
 
 export default function Index() {
 	const { signOut } = useAuth();
-	const { habits, deleteHabit } = useHabit();
-
-	const handleCompleteHabit = (habitId: number) => {
-		deleteHabit.mutate(habitId);
-	};
+	const { habits, deleteHabit, completeHabit } = useHabit();
 
 	const renderRightAction = () => (
 		<View style={styles.swipeActionRight}>
@@ -48,6 +44,8 @@ export default function Index() {
 							onSwipeableOpen={(dir) => {
 								if (dir === "right") {
 									deleteHabit.mutate(habit.id);
+								} else if (dir === "left") {
+									completeHabit.mutate(habit.id);
 								}
 							}}
 						>

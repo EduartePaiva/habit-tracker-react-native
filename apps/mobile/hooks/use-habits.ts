@@ -39,10 +39,18 @@ export function useHabit() {
 		},
 	});
 
+	const completeHabit = useMutation({
+		mutationFn: async (habitId: number) => {},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["habits"] });
+		},
+	});
+
 	return {
 		habits: habitsQuery.data,
 		isLoading: habitsQuery.isLoading,
 		addHabit,
 		deleteHabit,
+		completeHabit,
 	};
 }
