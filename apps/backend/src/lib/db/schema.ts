@@ -19,7 +19,7 @@ export const habitsTable = pgTable("habits", {
 	description: text().notNull(),
 	streakCount: integer().notNull().default(0),
 	frequency: frequencyEnum().notNull().default("daily"),
-	lastCompleted: timestamp().notNull().defaultNow(),
+	lastCompleted: timestamp().notNull().default(new Date("2020")),
 	createdAt: timestamp().notNull().defaultNow(),
 });
 

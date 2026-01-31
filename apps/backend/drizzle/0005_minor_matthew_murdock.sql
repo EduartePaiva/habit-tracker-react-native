@@ -1,0 +1,1 @@
+ALTER TABLE "habits" ALTER COLUMN "last_completed" SET DEFAULT '2020-01-01 00:00:00.000';
